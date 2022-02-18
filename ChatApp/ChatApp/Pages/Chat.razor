@@ -1,21 +1,49 @@
 ﻿@page "/Chat"
 @inherits ChatViewModel
 
-<h3>Chat</h3>
-    
-<div>
-    @foreach(var message in this.ChatMessageService.Messages)
-    {
-        <div>
-            <span class="text-muted">@message.Username</span>
-            @message.Message
+<div class="container-fluid">
+    <div class="row">
+        <h3>Chat</h3>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Lobby
+                </div>
+                <div class="card-body">
+                    <div class="chatlog">
+                        @foreach (var message in this.ChatMessageService.Messages)
+                        {
+                            <div>
+                                <span class="text-muted">@message.Username</span>
+                                @message.Message
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="input-group">
+                        <input class="form-control" @bind-value="this.currentMessage" type="text" />
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" @onclick="this.SendMessage">Senden</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    }
+        <div class="col-auto">
+            <div class="card">
+                <div class="card-header">
+                    Settings
+                </div>
+                <div class="card-body">
+                    <label for="username-text">Benutzername</label>
+                    <input id="username-text" class="form-control" @bind-value="this.currentUser" type="text" />
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div>
-    <input @bind-value="this.currentUser" type="text" />
-
-    <input @bind-value="this.currentMessage" type="text" />
-    <button @onclick="this.SendMessage">Senden</button>
-</div>

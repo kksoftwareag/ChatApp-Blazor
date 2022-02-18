@@ -62,3 +62,8 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.chatlog {
+    height: 70vh;
+    overflow-y: auto;
+}
