@@ -1,13 +1,18 @@
-﻿using ChatApp.Models;
+﻿using ChatApp.Messages;
+using ChatApp.Models;
 using ChatApp.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Toolkit.Mvvm.Messaging;
 
 namespace ChatApp.Pages
 {
-    public class ChatViewModel : ComponentBase
+    public class ChatViewModel : ComponentBase, IRecipient<ChatMessageSentMessage>
     {
         [Inject]
         public ChatMessageService ChatMessageService { get; set; }
+
+        [Inject]
+        public IMessenger Messenger { get; set; }
 
         protected string currentUser;
 
@@ -15,28 +20,23 @@ namespace ChatApp.Pages
 
         protected override void OnInitialized()
         {
-            this.ChatMessageService.Messages.Add(new ChatMessageModel()
-            {
-                Username = "Thomas",
-                Message = "Hallo"
-            });
-
-            this.ChatMessageService.Messages.Add(new ChatMessageModel()
-            {
-                Username = "Thomas",
-                Message = "Grüß Gott"
-            });
+            this.Messenger.Register<ChatMessageSentMessage>(this);
         }
 
         protected void SendMessage()
         {
-            this.ChatMessageService.Messages.Add(new ChatMessageModel()
+            this.ChatMessageService.SendMessage(new ChatMessageModel()
             {
                 Username = this.currentUser,
                 Message = this.currentMessage
             });
 
             this.currentMessage = String.Empty;
+        }
+
+        public void Receive(ChatMessageSentMessage message)
+        {
+            this.InvokeAsync(() => this.StateHasChanged());
         }
     }
 }
