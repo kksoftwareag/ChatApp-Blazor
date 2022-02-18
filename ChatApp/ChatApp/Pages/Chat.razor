@@ -4,7 +4,7 @@
 <h3>Chat</h3>
     
 <div>
-    @foreach(var message in this.messages)
+    @foreach(var message in this.ChatMessageService.Messages)
     {
         <div>
             <span class="text-muted">@message.Username</span>
@@ -14,6 +14,8 @@
 </div>
 
 <div>
+    <input @bind-value="this.currentUser" type="text" />
+
     <input @bind-value="this.currentMessage" type="text" />
     <button @onclick="this.SendMessage">Senden</button>
 </div>
