@@ -7,7 +7,8 @@
     @foreach(var message in this.messages)
     {
         <div>
-            @message
+            <span class="text-muted">@message.Username</span>
+            @message.Message
         </div>
     }
 </div>
