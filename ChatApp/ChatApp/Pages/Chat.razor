@@ -1,0 +1,18 @@
+﻿@page "/Chat"
+@inherits ChatViewModel
+
+<h3>Chat</h3>
+    
+<div>
+    @foreach(var message in this.messages)
+    {
+        <div>
+            @message
+        </div>
+    }
+</div>
+
+<div>
+    <input @bind-value="this.currentMessage" type="text" />
+    <button @onclick="this.SendMessage">Senden</button>
+</div>
