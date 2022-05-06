@@ -55,8 +55,8 @@ namespace ChatApp.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            this.CurrentUsername = await this.JsRuntime.InvokeAsync<string>("window.ChatApp.GetUsername");
             this.Messenger.Register<ChatMessageSentMessage>(this);
+            this.CurrentUsername = await this.JsRuntime.InvokeAsync<string>("window.ChatApp.GetUsername");
         }
 
         protected void SendMessage()
